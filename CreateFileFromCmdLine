@@ -1,0 +1,21 @@
+From https://unix.stackexchange.com/questions/159672/how-to-create-a-simple-txt-text-file-using-terminal. See post by Gilles
+ answered Oct 6 '14 at 22:09
+
+
+
+On the command line, you can do this more directly with cat. Redirect its output to the file and type the input line by line on cat's standard input. Press Ctrl+D at the beginning of the line to indicate the end of the input.
+
+$ cat >foo.txt
+First line.
+Second line.
+Third line.
+Ctrl+D
+
+In a script you would use a here document to achieve the same effect:
+
+cat <<EOF >foo.txt
+First line.
+Second line.
+Third line.
+EOF
+
