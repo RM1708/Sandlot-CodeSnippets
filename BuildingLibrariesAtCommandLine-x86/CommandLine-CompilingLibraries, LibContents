@@ -1,0 +1,72 @@
+Creating two small .c files from command line
+**************************************
+  566  cat >> file1.c << EOF
+#include <stdio.h>
+
+void main()
+{
+    printf("main() run!\n");
+    myfunc();
+}
+EOF
+
+  567  cat >> file2.c << EOF
+// file2.c
+#include <stdio.h>
+
+void myfunc()
+{
+    printf("myfunc() run!\n");
+}
+EOF
+*****************************************
+
+For creating a static library
+*****************************************
+  569  gcc -c file2.c
+  570  mkdir lib
+  571  cp file2.o lib
+  572  mv lib libs
+  573  cd libs/
+  574  ls
+  575  ar --help
+  576  ar -rcs libmylib.a file2.o 
+*****************************************
+
+
+Compling against the static library in the folder libs
+*******************************************************
+  581  gcc file1.c -Llibs -lmylib -o outfile
+  582  
+  583  ./outfile 
+
+
+Compiling to make a shared library
+**********************************
+  596  gcc -fPIC -c file2.c -o file2_shared
+  597  
+  598  
+  599  
+  600  ar -rcs libmylib.so file2_shared 
+  601  
+  602  
+  603  
+  604  
+  605  
+  606  gcc -shared file1.c -Llibs -lmylib -o outfile
+  607  gcc -static file1.c -Llibs -lmylib -o outfile
+  608  cd libs/
+  609  ls
+  610  cd ..
+  611  ./outfile 
+  612  rm libs/libmylib.a
+
+Compiling against the static library does not work as static lib has been deleted
+**********************************************************************************
+  619  gcc -static file1.c -Llibs -lmylib -o outfile
+
+Compiling against the shared library works.
+******************************************
+  620  gcc file1.c -Llibs -lmylib -o outfile
+  621  ./outfile 
+

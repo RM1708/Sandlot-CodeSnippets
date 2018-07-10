@@ -1,0 +1,65 @@
+****************************************************************
+    Libraries are searched by default in the libraries path ( gcc --print-search-dirs).
+
+    The include search path can be seen with gcc -v -E - < /dev/null 2>&1 | awk '/^#include/,/^End of search/' | grep '^ '. 
+
+ nm -D libz.so 
+readelf -s libz.so | grep 'gzdopen' 
+
+****************************************************************
+
+
+synclient Touchpadoff=1
+
+
+31Dec14
+-------
+Command line to remove all files other than those NOT commencing with 'gps' AND NOT commencing with 'rev'
+****************************************************************
+
+rmnair@rmnair-Latitude-E5410:/home/rmnair_ext/Workspace-Kepler-GPSD/Includes$ ls
+bits.h        crc24q.h        driver_nmea2000.h    driver_ubx.h  gpsd_config.h  gps.h       gpsmon.h
+bsd_base64.h  driver_italk.h  driver_superstar2.h  gpsdclient.h  gpsd.h         gps_json.h  revision.h
+
+
+rmnair@rmnair-Latitude-E5410:/home/rmnair_ext/Workspace-Kepler-GPSD/Includes$ ls [^'gps']* | grep -v '^rev'|  xargs rm -v
+removed ‘bits.h’
+removed ‘bsd_base64.h’
+removed ‘crc24q.h’
+removed ‘driver_italk.h’
+removed ‘driver_nmea2000.h’
+removed ‘driver_superstar2.h’
+removed ‘driver_ubx.h’
+
+rmnair@rmnair-Latitude-E5410:/home/rmnair_ext/Workspace-Kepler-GPSD/Includes$ ls
+gpsdclient.h  gpsd_config.h  gpsd.h  gps.h  gps_json.h  gpsmon.h  revision.h
+
+****************************************************************
+
+15Jan15
+-------
+Finding broken links in all folders under current folder
+*******************************************************
+
+find . -type l -xtype l
+
+OR
+
+sudo find . -type l -xtype l > ~/Desktop/BrokenLinksInFS
+
+and to exclude some directories from the search
+
+sudo find . -path ./media -prune -o -type l -xtype l > ~/Desktop/BrokenLinks
+
+****************************************************************
+
+/usr/lib/i386-linux-gnu/libgps.so.20
+
+****************************************************************
+grep to find lines that have error, but not: error preceded by "." or "_" or "-" or "/" AND followed by "." or "_" or "-" or "/" or "[" AND not at the end of a line
+
+cat ./media/rm/e3c4f442-d6d8-4c17-848e-10f3ed013889/Wednesday/rsync_log | grep -w error | egrep -v '[\._-\/]error[\._-/[]' | grep -v 'error$'
+
+cat ./media/rm/e3c4f442-d6d8-4c17-848e-10f3ed013889/Wednesday/rsync_log | grep -w error | egrep -v '[\._-\/]error[\._-/[]' | grep -v 'error$'
+
+
